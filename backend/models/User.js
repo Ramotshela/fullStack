@@ -12,7 +12,23 @@ module.exports = (sequelize, DataTypes) => {
 
   Users.associate = (models) => {
     Users.hasMany(models.Likes, {
-      onDelete: 'cascade'
+      onDelete: "cascade",
+    });
+  };
+
+  Users.associate = (models) => {
+    Users.hasMany(models.PhoneBooks, {
+      onDelete: "cascade",
+    });
+  };
+  Users.associate = (models) => {
+    Users.hasMany(models.Messages, {
+      onDelete: "cascade",
+    });
+  };
+  Users.associate = (models) => {
+    Users.hasOne(models.ContactInfos, {
+      onDelete: "cascade",
     });
   };
 

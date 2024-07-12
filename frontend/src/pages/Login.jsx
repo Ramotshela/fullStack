@@ -24,7 +24,7 @@ function Login() {
       } else {
         sessionStorage.setItem("accessToken", response.data);
         setAuthState(true);
-        navigate('/')
+        navigate('/posts')
       }
     });
   };
@@ -35,6 +35,7 @@ function Login() {
       validationSchema={validationSchema}
     >
       <Form className="Form">
+        <h1>Login</h1>
         <label htmlFor="">username</label>
         <Field name="username" className="field" placeholder="username"></Field>
         <label htmlFor="">password</label>
