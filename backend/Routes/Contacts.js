@@ -1,12 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const { ContactInfos, PhoneBooks } = require("../models");
+const { Users, PhoneBooks } = require("../models");
 const { validateToken } = require("../middleware/middleware");
 
 // Add a new contact
 router.post("/addContact", validateToken, async (req, res) => {
-  const { name, number } = req.body;
-  const UserId = req.user.id;
+  const {  name, number } = req.body;
 
   if (!name || !number) {
     return res.status(400).json({ error: "Name and number are required." });
@@ -14,21 +13,28 @@ router.post("/addContact", validateToken, async (req, res) => {
 
   try {
     const findExistingContact = await PhoneBooks.findOne({
-      where: { number: number, UserId: UserId },
+      where: { number: number },
     });
 
-    if (findExistingContact) {
-      return res.status(409).json({ message: "User already exists with that number." });
+    const userExists = await Users.findOne({ where: { id: number } });
+ 
+    if (!userExists || findExistingContact) {
+      return res
+        .status(409)
+        .json({ message: "User already exists with that number." });
     } else {
       const contact = await PhoneBooks.create({
         name: name,
         number: number,
-        UserId: UserId,
+        UserId: req.user.id,
       });
       return res.status(201).json(contact);
     }
   } catch (error) {
-    return res.status(500).json({ error: "An error occurred while adding the contact.", details: error });
+    return res.status(500).json({
+      error: `An error occurred while adding the contact. ${error}`,
+      
+    });
   }
 });
 
@@ -40,7 +46,10 @@ router.get("/getContacts", validateToken, async (req, res) => {
     });
     return res.status(200).json(allContacts);
   } catch (error) {
-    return res.status(500).json({ error: "An error occurred while retrieving contacts.", details: error });
+    return res.status(500).json({
+      error: "An error occurred while retrieving contacts.",
+      details: error,
+    });
   }
 });
 
@@ -52,10 +61,15 @@ router.get("/contacts/:id", validateToken, async (req, res) => {
     if (contact && contact.UserId === req.user.id) {
       return res.status(200).json(contact);
     } else {
-      return res.status(404).json({ message: "Contact not found or not authorized." });
+      return res
+        .status(404)
+        .json({ message: "Contact not found or not authorized." });
     }
   } catch (error) {
-    return res.status(500).json({ error: "An error occurred while retrieving the contact.", details: error });
+    return res.status(500).json({
+      error: "An error occurred while retrieving the contact.",
+      details: error,
+    });
   }
 });
 
@@ -68,10 +82,15 @@ router.delete("/delete/:id", validateToken, async (req, res) => {
       await PhoneBooks.destroy({ where: { id: id } });
       return res.status(200).json({ message: "Contact deleted successfully." });
     } else {
-      return res.status(404).json({ message: "Contact not found or not authorized." });
+      return res
+        .status(404)
+        .json({ message: "Contact not found or not authorized." });
     }
   } catch (error) {
-    return res.status(500).json({ error: "An error occurred while deleting the contact.", details: error });
+    return res.status(500).json({
+      error: "An error occurred while deleting the contact.",
+      details: error,
+    });
   }
 });
 

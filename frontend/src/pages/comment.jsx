@@ -59,15 +59,7 @@ function Comment() {
 
   return (
     <div>
-      <div>
-        <input
-          className="field"
-          type="text"
-          value={newComment}
-          onChange={(event) => setNewComment(event.target.value)}
-        />
-        <button onClick={onSubmit}>Comment</button>
-      </div>
+      
 
       <div>
         {comments.map((val, key) => (
@@ -75,7 +67,7 @@ function Comment() {
             {val.comments}
             <label>
               {" "}
-              <i> {val.username}</i>
+              <i className="owner"> {val.username}</i>
             </label>
             {authState.username === val.username && (
               <button
@@ -89,6 +81,16 @@ function Comment() {
             )}
           </div>
         ))}
+      </div>
+      <div className="commentInput">
+        <input
+          className="field"
+          type="text"
+          value={newComment}
+          onChange={(event) => setNewComment(event.target.value)}
+          placeholder="comment..."
+        />
+        <button onClick={onSubmit}>Comment</button>
       </div>
     </div>
   );

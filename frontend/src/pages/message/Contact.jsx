@@ -7,7 +7,7 @@ function Contact() {
   const { authState } = useContext(authContext);
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
-  const [getContacts,setGetContacts]=useState([]);
+  const [getContacts, setGetContacts] = useState([]);
   const [contacts, setContacts] = useState([]);
   const navigate = useNavigate();
 
@@ -15,7 +15,7 @@ function Contact() {
     try {
       const response = await axios.post(
         "http://localhost:5174/contacts/addContact",
-        { name:name, number:number },
+        { name: name, number: number },
         { headers: { accessToken: sessionStorage.getItem("accessToken") } }
       );
       console.log(response.data);
@@ -30,9 +30,12 @@ function Contact() {
   useEffect(() => {
     const fetchContacts = async () => {
       try {
-        const response = await axios.get("http://localhost:5174/contacts/getContacts", {
-          headers: { accessToken: sessionStorage.getItem("accessToken") },
-        });
+        const response = await axios.get(
+          "http://localhost:5174/contacts/getContacts",
+          {
+            headers: { accessToken: sessionStorage.getItem("accessToken") },
+          }
+        );
         console.log(response.data);
         setGetContacts(response.data);
       } catch (error) {
@@ -44,8 +47,15 @@ function Contact() {
 
   const deleteContact = async (id) => {
     try {
-      await axios.delete(`http://localhost:5174/contacts/delete/${id}`);
-      setContacts(contacts.filter((contact) => contact.id !== id));
+      await axios
+        .delete(`http://localhost:5174/contacts/delete/${id}`)
+        .then((res) =>
+          setContacts(
+            contacts.filter((contact) => {
+              return contact.id != id;
+            })
+          )
+        );
     } catch (error) {
       console.error("Error deleting contact:", error);
     }
@@ -80,7 +90,12 @@ function Contact() {
               <div onClick={() => getContactById(contact.id)}>
                 {contact.name} : {contact.number}
               </div>
-              <button className="delete-button" onClick={() => deleteContact(contact.id)}>X</button>
+              <button
+                className="delete-button"
+                onClick={() => deleteContact(contact.id)}
+              >
+                X
+              </button>
             </div>
           ))}
         </div>

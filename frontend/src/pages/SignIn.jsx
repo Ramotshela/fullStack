@@ -16,17 +16,17 @@ function SignIn() {
     }
     const onSubmit=(data)=>{
        Axios.post("http://localhost:5174/auth/register",data).then((response)=>{
-         navigate('/')
+         navigate('/posts')
         })
     }
   return (
     <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
       <Form className="Form">
         <h1>register</h1>
-        <label htmlFor="">username</label>
+        
         <ErrorMessage name="title"/>
         <Field name="username" className="field" placeholder="username"></Field>
-        <label htmlFor="">password</label>
+      
         <ErrorMessage>Invalid password</ErrorMessage>
         <Field name="password" className="field" placeholder="password"></Field>
 

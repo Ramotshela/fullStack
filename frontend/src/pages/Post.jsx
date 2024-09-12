@@ -30,7 +30,7 @@ function Post() {
           </div>
         </div>{" "}
       </div>{" "}
-      <div className="left">comment section <Comment  /> </div>{" "}
+      <div className="left"> <Comment  /> </div>{" "}
     </div>
   );
 }

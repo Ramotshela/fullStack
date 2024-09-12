@@ -58,7 +58,7 @@ console.log(response.data)
     <div className="allpost">
       {listPost.map((val, key) => {
         return (
-          <div className="post">
+          <div className="post" key={key}>
             <div key={key} className="title">
               <h3>{val.title}</h3>
             </div>

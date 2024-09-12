@@ -36,9 +36,9 @@ function Login() {
     >
       <Form className="Form">
         <h1>Login</h1>
-        <label htmlFor="">username</label>
+        
         <Field name="username" className="field" placeholder="username"></Field>
-        <label htmlFor="">password</label>
+        
         <Field name="password" className="field" placeholder="password"></Field>
         <button type="submit">Login</button>
       </Form>

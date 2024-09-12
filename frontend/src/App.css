@@ -40,8 +40,8 @@ label{
   padding: 15px;
 }
 .Form{
-  width: 850px;
-  height: 600px;
+  width: 750px;
+  height: 440px;
   border: 1px solid;
   display: flex;
   flex-direction: column;
@@ -55,14 +55,17 @@ label{
   align-self: flex-start;
 }
 .field{
-  width: 840px;
+  width: 640px;
   height: 50px;
   margin-bottom: 15px;
+  border: none;
+  border-bottom: 1px solid #555;
 }
 button{
-  width: 840px;
+  width: 420px;
   height: 50px;
   font-size: 30px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .home{
   width: 100%;
@@ -81,10 +84,12 @@ a{
   font-size: 30px;
 }
 .main{
+  width:100%;
+
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
   align-items: center;
-  margin-top: 200px;
   font-size: 30px;
   gap: 50px;
 }
@@ -100,18 +105,35 @@ a{
 .comment label{
   margin:5px;
 }
+.commentInput{
+  display: flex;
+  flex-direction: column;
+  justify-content: baseline;
+  align-items: baseline;
+}
 .comment {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
+  align-items: flex-start;
   width: 100%;
   height: inherit;
   background: #f1f1f1;
+  font-size: 15px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
   margin-top:50px;
   margin-bottom: 10px;
-  padding: 20px;
+  padding: 10px;
   border-radius: 50px;
-  border:1px solid #000
+  border:none;
+}
+.comment i {
+  font-size: 15px;
+} 
+.comment button{
+  font-size: 15px;
+  width: 40px;
+  height: 30px;
 }
 .date{
   margin-top: 5px;
@@ -196,7 +218,7 @@ position: relative;
 .message h6{
   font-size: 40px;
 }
-.contactLst{
+.input-group{
   position: relative;
   bottom: 0px;
   right: 0px;
