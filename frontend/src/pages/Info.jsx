@@ -2,26 +2,31 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-
-
 function Info() {
   const [number, setNumber] = useState("");
   const [name, setName] = useState("");
   const [getContact, setGetContact] = useState([]);
-  const navigate=useNavigate()
+  const navigate = useNavigate();
 
   function create() {
     axios
       .post(
         "http://localhost:5174/contactInfo/contact",
-        { name: name, number: number },
+        { name, number },
         { headers: { accessToken: sessionStorage.getItem("accessToken") } }
       )
       .then((response) => {
         console.log(response.data);
-navigator('/')
+        setName("");
+        setNumber("");
+        setGetContact((prevContacts) => [...prevContacts, { name, number }]);
+        navigate("/");
+      })
+      .catch((error) => {
+        console.error("There was an error creating the contact!", error);
       });
   }
+
   useEffect(() => {
     axios
       .get("http://localhost:5174/contactInfo/getContact", {
@@ -30,6 +35,9 @@ navigator('/')
       .then((response) => {
         setGetContact(response.data);
         console.log(response.data);
+      })
+      .catch((error) => {
+        console.error("There was an error fetching the contacts!", error);
       });
   }, []);
 
@@ -37,27 +45,32 @@ navigator('/')
     <div>
       <h1>Contact</h1>
       <div>
-        <h4>create contacts</h4>
+        <h4>Create Contacts</h4>
         <input
           value={name}
           onChange={(e) => setName(e.target.value)}
           type="text"
-          placeholder="name"
+          placeholder="Name"
         />
         <input
           value={number}
           onChange={(e) => setNumber(e.target.value)}
           type="text"
-          placeholder="number"
+          placeholder="Number"
         />
         <button type="button" onClick={create}>
-          create
+          Create
         </button>
       </div>
       <div>
-        
-          name:{getContact.name} number:{getContact.number}
-        
+        { (
+          
+            <div >
+              Name: {getContact.name} Number: {getContact.number}
+            </div>
+          
+        ) 
+        }
       </div>
     </div>
   );
